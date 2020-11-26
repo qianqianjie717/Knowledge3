@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -38,15 +39,44 @@ public class comment extends AppCompatActivity {
     private Map map1_cm;
     private List<Map<String,Object>> list_cm = new ArrayList<>();
     //private List<Map<String,Object>> list1_cm = new ArrayList<>();
+    //private boolean flagLike;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
 
+        TextView text =(TextView) findViewById(R.id.Text);
+        TextView sText =(TextView) findViewById(R.id.shortText);
+        TextView lText = (TextView) findViewById(R.id.longText);
+
+        mRecycleView = (RecyclerView) findViewById(R.id.rv_comment);
+
         Intent intent = getIntent();
         final String id_at = intent.getStringExtra("mid");
+        final String lcomments = intent.getStringExtra("l");
+        final String scomments = intent.getStringExtra("s");
+        final String all = intent.getStringExtra("all");
+        sText.setText("短评"+scomments);
+        lText.setText("长评"+lcomments);
+        //Log.d("yht", String.valueOf(scomments));
+        text.setText("评论"+all);
         Log.d("yht",id_at);
+
+        /*final ImageView thumb = (ImageView) findViewById(R.id.thumb);
+        thumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //int collectNum = Integer.parseInt(tvCollent.getText().toString());
+                if (flagLike) {
+                    thumb.setImageResource(R.drawable.thumb);
+                } else {
+                    thumb.setImageResource(R.drawable.afterlike);
+                }
+                flagLike = !flagLike;
+            }
+        });*/
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -140,31 +170,23 @@ public class comment extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(string);
             Log.d("yht",string);
-            //final int l = jsonObject.getInt("long_comments");
-            //map_cm.put("l",l);
-            //Log.d("yht", String.valueOf(lcomments));
-            //final int s = jsonObject.getInt("short_comments");
-            //map_cm.put("s",s);
-            final JSONArray jsonArray = jsonObject.getJSONArray("comments");
+            JSONArray jsonArray = jsonObject.getJSONArray("comments");
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                 final String author = jsonObject1.getString("author");
                 final String content = jsonObject1.getString("content");
+                final String imagesArray = jsonObject1.getString("avatar");
+                //String images = imagesArray.getString(0);
                 Map<String,Object>map_cm = new HashMap<>();
                 map_cm.put("author",author);
                 map_cm.put("content",content);
+                map_cm.put("picture",imagesArray);
                 list_cm.add(map_cm);
             }
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mRecycleView = (RecyclerView) findViewById(R.id.rv_comment);
-                    TextView text =(TextView) findViewById(R.id.Text);
-                    TextView sText =(TextView) findViewById(R.id.shortText);
-                    sText.setText("短评"+jsonArray.length());
-                    //Log.d("yht", String.valueOf(scomments));
-                    text.setText("评论");
                     mRecycleView.setLayoutManager(new LinearLayoutManager(comment.this));
                     mRecycleView.addItemDecoration(new MyDecoration());
                     mRecycleView.setAdapter(new commentAdapter(comment.this,list_cm));

@@ -95,6 +95,7 @@ public class shouye extends AppCompatActivity {
 
         final TextView day = (TextView) findViewById(R.id.day);
         final TextView month = (TextView) findViewById(R.id.month);
+        //final TextView year =(TextView) findViewById(R.id.year);
         final TextView text2 = (TextView) findViewById(R.id.textView2);
         //显示时间
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy年MM月  ");
@@ -174,9 +175,8 @@ public class shouye extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(string);
                     Log.i("zyr", string);
                     dates = jsonObject.getInt("date");
-                    //map.put("riqi",dates);
+                    final String date = String.valueOf(dates);
                     JSONArray jsonArray = jsonObject.getJSONArray("stories");
-                    //JSONObject jsonObject1 = jsonArry.getJSONObject(0);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                         final String title = jsonObject1.getString("title");
@@ -185,10 +185,25 @@ public class shouye extends AppCompatActivity {
                         final int id = jsonObject1.getInt("id");
                         final String hint = jsonObject1.getString("hint");
                         final String url = jsonObject1.getString("url");
+                        final String year,month,day;
                         Map<String, Object> map = new HashMap<>();
+                        if (i==0){
+                            year = date.substring(0,4);
+                            month = date.substring(4,6);
+                            day = date.substring(6,8);
+                        }
+                        else {
+                            year = null;
+                            month = null;
+                            day = null;
+                        }
+                       //Map<String, Object> map = new HashMap<>();
                         map.put("i",i);
+                        map.put("day",day);
+                        map.put("month",month);
+                        map.put("year",year);
                         map.put("title", title);
-                        map.put("images", images);
+                        map.put("picture", images);
                         map.put("id", id);
                         map.put("hint", hint);
                         map.put("url", url);
@@ -265,6 +280,7 @@ public class shouye extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(string);
                         dates= jsonObject.getInt("date");
+                        final String date = String.valueOf(dates);
                         //map.put("riqi",dates);
                         JSONArray jsonArray = jsonObject.getJSONArray("stories");
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -275,8 +291,23 @@ public class shouye extends AppCompatActivity {
                             final String id = jsonObject1.getString("id");
                             final String hint = jsonObject1.getString("hint");
                             final String url = jsonObject1.getString("url");
+                            final String year,month,day;
                             Map<String, Object> map = new HashMap<>();
+                            if (i==0){
+                                year = date.substring(0,4);
+                                month = date.substring(4,6);
+                                day = date.substring(6,8);
+                            }
+                            else {
+                                year = null;
+                                month = null;
+                                day = null;
+                            }
+                            //Map<String,Object> map = new HashMap<>();
                             map.put("i",i);
+                            map.put("day",day);
+                            map.put("month",month);
+                            map.put("year",year);
                             map.put("title", title);
                             map.put("picture", images);
                             map.put("id", id);

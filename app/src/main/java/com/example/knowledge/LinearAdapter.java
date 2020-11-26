@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 import java.util.Map;
-public class LinearAdapter extends RecyclerView.Adapter<LinearAdapter.LinearViewHolder> {
+public class LinearAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Map<String,Object>> list;
     private Context mContext;
@@ -34,31 +34,32 @@ public class LinearAdapter extends RecyclerView.Adapter<LinearAdapter.LinearView
 
     @NonNull
     @Override
-    public LinearAdapter.LinearViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        /*if(viewType ==1){
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        if(viewType ==1){
             return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.hahah,parent,false));
         }else{
             return new LinearViewHolder2(LayoutInflater.from(mContext).inflate(R.layout.hahaha2,parent,false));
-        }*/
-        return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.hahah,parent,false));
+        }
+        //return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.hahah,parent,false));
     }
 
-    /*@Override
+    @Override
     public int getItemViewType(int position) {
         if(list.get(position).get("i").equals(0)){
             return 0;
         }else{
             return 1;
         }
-    }*/
+    }
 
     @Override
-    public void onBindViewHolder(@NonNull LinearAdapter.LinearViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
-        holder.title.setText(list.get(position).get("title").toString());
+        /*holder.title.setText(list.get(position).get("title").toString());
         holder.object.setText(list.get(position).get("hint").toString());
         Glide.with(mContext).load(list.get(position).get("picture")).into(((LinearViewHolder) holder).picture);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        */holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),webViewActivity.class);
@@ -68,16 +69,20 @@ public class LinearAdapter extends RecyclerView.Adapter<LinearAdapter.LinearView
             }
         });
 
-        /*if(getItemViewType(position) == 1){
+        if(getItemViewType(position) == 1){
             ((LinearViewHolder)holder).title.setText(list.get(position).get("title").toString());
             ((LinearViewHolder)holder).object.setText(list.get(position).get("hint").toString());
             Glide.with(mContext).load(list.get(position).get("picture")).into(((LinearViewHolder) holder).picture);
         }else{
-            ((LinearViewHolder2)holder).date.setText(list.get(position).get("riqi").toString());
-            ((LinearViewHolder2)holder).title.setText(list.get(position).get("title").toString());
-            ((LinearViewHolder2)holder).object.setText(list.get(position).get("hint").toString());
-            Glide.with(mContext).load(list.get(position).get("picture")).into(((LinearViewHolder) holder).picture);
-        }*/
+            //((LinearViewHolder2)holder).date.setText(list.get(position).get("riqi").toString());
+            LinearViewHolder2 holder2 = (LinearViewHolder2) holder;
+            holder2.year.setText(list.get(position).get("year").toString());
+            holder2.month.setText(list.get(position).get("month").toString());
+            holder2.day.setText(list.get(position).get("day").toString());
+            holder2.title.setText(list.get(position).get("title").toString());
+            holder2.object.setText(list.get(position).get("hint").toString());
+            Glide.with(mContext).load(list.get(position).get("picture")).into(holder2.picture);
+        }
    }
 
     @Override
@@ -97,20 +102,24 @@ public class LinearAdapter extends RecyclerView.Adapter<LinearAdapter.LinearView
             picture = (ImageView) itemView.findViewById(R.id.imagine);
         }
     }
-    /*class LinearViewHolder2 extends RecyclerView.ViewHolder{
+    class LinearViewHolder2 extends RecyclerView.ViewHolder{
 
         private TextView date;
         private TextView title ;
         private TextView object;
+        private TextView day,month,year;
         private ImageView picture;
 
         public LinearViewHolder2(@NonNull View itemView) {
             super(itemView);
-            date = (TextView) itemView.findViewById(R.id.dates);
+            //date = (TextView) itemView.findViewById(R.id.dates);
+            year = itemView.findViewById(R.id.year);
+            month = itemView.findViewById(R.id.month);
+            day = itemView.findViewById(R.id.day);
             title = (TextView) itemView.findViewById(R.id.text1);
             object = (TextView) itemView.findViewById(R.id.text2);
             picture = (ImageView) itemView.findViewById(R.id.imagine);
         }
-    }*/
+    }
 }
 

@@ -4,10 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +20,8 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.LinearVi
 
     private Context mcontext;
     private List<Map<String,Object>> list;
+
+    private boolean flagLike;
 
     public commentAdapter(Context context, List<Map<String, Object>> list_cm){
         this.mcontext = context;
@@ -36,7 +42,7 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.LinearVi
         return list.size();
     }
     @Override
-    public void onBindViewHolder(@NonNull commentAdapter.LinearViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LinearViewHolder holder, int position) {
         /*if (getItemViewType(position)== 1){
             ((LinearAdapter.LinearViewHolder)holder).textVxiew1.setText(list.get(position).get("author").toString());
             ((LinearAdapter.LinearViewHolder)holder).textView2.setText(list.get(position).get("content").toString());
@@ -45,16 +51,21 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.LinearVi
         }*/
         holder.textView1.setText(list.get(position).get("author").toString());
         holder.textView2.setText(list.get(position).get("content").toString());
+        Glide.with(mcontext).load(list.get(position).get("picture")).into(holder.imageView);
     }
     class LinearViewHolder extends RecyclerView.ViewHolder{
 
         private TextView textView1;
         private TextView textView2;
+        private ImageView imageView;
+        private ImageView thumb;
 
         public LinearViewHolder(@NonNull View itemView) {
             super(itemView);
+            thumb = (ImageView) itemView.findViewById(R.id.thumb);
             textView1 = (TextView) itemView.findViewById(R.id.author);
             textView2 = (TextView) itemView.findViewById(R.id.comment);
+            imageView = (ImageView) itemView.findViewById(R.id.touXiang);
         }
     }/*class LinearViewHOlder2 extends RecyclerView.ViewHolder{
 

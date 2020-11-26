@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF">
-    <TextView
-        android:id="@+id/author"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center_vertical"
-        android:layout_gravity="right"
-        android:textSize="15sp"/>
-    <TextView
-        android:id="@+id/comment"
+    <ImageView
+        android:id="@+id/touXiang"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textStyle="bold"
-        android:textSize="18sp"/>
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/touXiang">
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_gravity="right"
+            android:gravity="center_vertical"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:background="@drawable/button_circle_shape2"/>
+    </LinearLayout>
+    <TextView
+        android:layout_below="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
 
-</LinearLayout>
+</RelativeLayout>
